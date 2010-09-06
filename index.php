@@ -3,17 +3,8 @@
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
     <head>
 		<title>BeachPHP</title>
-        <style type="text/css">
-		    /*<![CDATA[*/
-            body, html { font-family: 'Droid Sans Mono', arial, serif; }
-			html, body { width: 100%; height: 100%; margin: 0px; }
-			h1 { font-family: 'Droid Sans', arial, serif; margin:0px; font-size:30px;}
-			#editRegion { font-size:24px; }
-			textarea { font-family: 'Droid Sans Mono', arial, serif;  font-size:24px;}
-			.dijit {font-size:14px;}
-			/*]]>*/
-        </style>
-        <script type="text/javascript" src="/dojo/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+        
+        <script type="text/javascript" src="/dojo/dojo/dojo.js" djConfig="debugAtAllCosts:true"></script>
         <script type="text/javascript">
 		//<![CDATA[
             dojo.require('beach.Editor');
@@ -21,21 +12,29 @@
             dojo.require("dijit.layout.TabContainer");
             dojo.require("dijit.layout.AccordionContainer");
             dojo.require("dijit.layout.ContentPane");
+            dojo.require("dojox.layout.ExpandoPane");
+            dojo.addOnLoad(function(){
+	            dojo.parser.parse();
+	            var editor = new beach.Editor({target:'output'}, 'code');
+			});
 			//]]>
         </script>
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="/dojo/dijit/themes/soria/soria.css" />
 		<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css" />
-		<script type="text/javascript" src="js/shCore.js"></script>
-		<script type="text/javascript" src="js/shBrushPhp.js"></script>
-		<script type="text/javascript" src="js/shBrushXml.js"></script>
-		<script type="text/javascript">
-		//<![CDATA[
-		dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
-		dp.SyntaxHighlighter.HighlightAll('code');
-		//]]>
-		</script>
+		<style type="text/css">
+		    /*<![CDATA[*/
+            body, html { font-family: 'Droid Sans Mono', arial, serif; }
+			html, body { width: 100%; height: 100%; margin: 0px; }
+			h1 { font-family: 'Droid Sans', arial, serif; margin:0px; font-size:30px;}
+			#editRegion { font-size:24px; }
+			textarea { font-family: 'Droid Sans Mono', arial, serif;  font-size:24px;}
+			.dijit {font-size:14px;}
+			@import "dojo/dojox/layout/resources/ExpandoPane.css";
+			/*]]>*/
+        </style>
+		
     </head>
     <body class="soria">
         <div dojoType="dijit.layout.BorderContainer" style="width: 100%; height: 100%;">
@@ -48,11 +47,19 @@
 	                Output pane
 	            </div>	
 	            <div dojoType="dijit.layout.ContentPane" region="center" editable="true" style="margin:0px;padding:0px;overflow-x:hidden;overflow-y:scroll">
-		            <textarea id="code" dojoType="beach.Editor" target="output" name="code" cols="100" rows="100" class="php" style="height:98%;width:98%;padding:2%" >&lt;?php
+		            <textarea id="code" name="code" cols="100" rows="100" style="height:98%;width:98%;padding:2%" >&lt;?php
 echo "Welcome to BeachPHP!";</textarea>
 		        </div>
             </div>
-			<div dojoType="dijit.layout.AccordionContainer" region="trailing" toggleSplitterOpenSize="40" toggleSplitterOpen="true" splitter="true" style="width:200px">
+			<div dojoType="dojox.layout.ExpandoPane" 
+							splitter="true" 
+							region="right" 
+							id="rightPane" 
+							maxWidth="275" 
+							style="width:275px" 
+							easeIn="dojox.fx.easing.backOut" 
+							easeOut="dojox.fx.easing.backInOut">
+			<div dojoType="dijit.layout.AccordionContainer" style="width:200px">
                 <div dojoType="dijit.layout.AccordionPane" title="pane #1">
                     Settings pane #1
                 </div>
@@ -63,6 +70,7 @@ echo "Welcome to BeachPHP!";</textarea>
                     Settings pane #3
                 </div>
             </div>	
+</div>
         </div>
     </body>
 </html>

@@ -12,9 +12,9 @@ if(!dojo._hasResource["beach.Editor"]){
             }
             this.domNode = node;
             if ('string' == typeof args.target) {
-                args.target = dijit.byId(args.target);
+                args.target = dojo.byId(args.target);
             }
-            this.target = args.target;
+            this.targat = args.targat;
             dojo.connect(this.domNode, 'onkeyup', this, this._onKeyUp);
             dojo.connect(this.domNode, 'onchange', this, this._onChange);
         },
@@ -28,17 +28,18 @@ if(!dojo._hasResource["beach.Editor"]){
             if (this.timeout) {
                 window.clearTimeout(this.timeout);
             }
-            this.timeout = window.setTimeout(this.doXhr, 1000, {postValue:this.domNode.value, scope:this});
+            this.timeout = window.setTimeout(dojo.hitch(this,this.doXhr), 1000);
         },
         doXhr : function(args) {
-            var scope = args.scope;
-            var postData = {data : args.postValue};
+            var postData = {data:this.domNode.value};
             var xhrArgs = {
                 content : postData,
                 url     : '/eval.php',
-                load    : function(response) {console.log(response); scope.target.innerHTML = response}
-            }
-            scope.xhr = dojo.xhrPost(xhrArgs);
+                load    : dojo.hitch(this, function(response) {
+                    this.target.innerHTML = response;
+                })
+            };
+            this.xhr = dojo.xhrPost(xhrArgs);
         }
     });
 }

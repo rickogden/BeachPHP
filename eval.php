@@ -14,5 +14,5 @@ ini_set('open_basedir', implode(PATH_SEPARATOR, array(__DIR__,'/tmp')) . PATH_SE
 ob_start();
 include $file;
 $content = ob_get_clean();
-echo htmlentities($content);
+echo nl2br(htmlentities($content));
 unlink($file);
