@@ -13,6 +13,7 @@
             dojo.require("dijit.layout.AccordionContainer");
             dojo.require("dijit.layout.ContentPane");
             dojo.require("dojox.layout.ExpandoPane");
+			dojo.require('dijit.form.CheckBox');
             dojo.addOnLoad(function(){
 	            dojo.parser.parse();
 	            var editor = new beach.Editor({target:'output'}, 'code');
@@ -22,7 +23,7 @@
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="/dojo/dijit/themes/soria/soria.css" />
-		<link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css" />
+        <link rel="stylesheet" type="text/css" href="dojo/dojox/layout/resources/ExpandoPane.css" />
 		<style type="text/css">
 		    /*<![CDATA[*/
             body, html { font-family: 'Droid Sans Mono', arial, serif; }
@@ -31,7 +32,6 @@
 			#editRegion { font-size:24px; }
 			textarea { font-family: 'Droid Sans Mono', arial, serif;  font-size:24px;}
 			.dijit {font-size:14px;}
-			@import "dojo/dojox/layout/resources/ExpandoPane.css";
 			/*]]>*/
         </style>
 		
@@ -56,17 +56,19 @@ echo "Welcome to BeachPHP!";</textarea>
 							region="right" 
 							id="rightPane" 
 							maxWidth="275" 
+							title="Tools"
 							style="width:275px" 
 							easeIn="dojox.fx.easing.backOut" 
 							easeOut="dojox.fx.easing.backInOut">
 			<div dojoType="dijit.layout.AccordionContainer" style="width:200px">
-                <div dojoType="dijit.layout.AccordionPane" title="pane #1">
-                    Settings pane #1
+                <div dojoType="dijit.layout.AccordionPane" title="Settings">
+
+	                     <label><input dojoType="dijit.form.CheckBox" title="Enable ZF Autoloader" type="checkbox" value="yes" <?php echo (file_exists('Zend/Loader/Autoloader.php')) ? 'disabled="disabled"' : ''; ?>/> Enable ZF Autoloader</label>
                 </div>
-                <div dojoType="dijit.layout.AccordionPane" title="pane #2">
+                <div dojoType="dijit.layout.AccordionPane" title="Snippits">
                     Settings pane #2
                 </div>
-                <div dojoType="dijit.layout.AccordionPane" title="pane #3">
+                <div dojoType="dijit.layout.AccordionPane" title="Misc">
                     Settings pane #3
                 </div>
             </div>	
